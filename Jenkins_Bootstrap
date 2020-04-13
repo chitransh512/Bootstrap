@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    parameters {
+        
+        choice(name: 'service_action', choices: [
+      '',
+
+      'plan',
+      'deploy',
+      'output',
+    ], description: 'Action to perform.')
+    choice(name: 'repo_name', choices: [
+      '',
+      'cofense-platform-dev-pm',
+      'cofense-platform-dev-reporter',
+      'cofense-platform-lab',
+      'cofense-platform-lab',
+      'cofense-platform-prod-pm',
+      'cofense-platform-prod-reporter',
+    ], description: 'REPO to take action on.' )
+    choice(name: 'log_level', choices: ['', 'DEBUG'], description: 'Log Level. Blank to use Default.')
+    }
+    stages {
+        stage ('Git_Clone') {
+            steps {
+                echo "git clone ${params.repo_name}"
+                echo "service_action ${params.service_action}"
+                sh label: '', script: "cd ${params.platform_name}\'"
+                sh label: '', script: 'pwd'
+                 }
+             }
+        }
+}
+
