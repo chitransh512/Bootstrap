@@ -25,7 +25,7 @@ environment {
     stages {
         stage ('Git Checkout') {
             steps {
-                git credentialsId: '48d75450-e84e-4481-a8cb-dab1089ad5c8', url: '${params.Repo_Name}'
+                git credentialsId: '48d75450-e84e-4481-a8cb-dab1089ad5c8', url: "${params.Repo_Name}"
                 sh label: '', script: 'pwd;ls -la'
                 dir('Jenkins-Bootstrap') {
     sh label: '', script: 'pwd;ls -la'
