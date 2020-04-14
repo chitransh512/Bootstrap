@@ -23,9 +23,10 @@ pipeline {
     stages {
         stage ('Git_Clone') {
             steps {
+                currentBuild.displayName = "${params.stack_name} ${params.service_action}"
                 echo "git clone ${params.repo_name}"
                 echo "service_action ${params.service_action}"
-                sh label: '', script: "cd ${params.platform_name}\'"
+                sh label: '', script: "cd ${params.repo_name}\'"
                 sh label: '', script: 'pwd'
                  }
              }
