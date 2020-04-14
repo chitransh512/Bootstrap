@@ -2,34 +2,31 @@ pipeline {
     agent any
     parameters {
         
-        choice(name: 'service_action', choices: [
+      choice(name: 'service_action', choices: [
       '',
-
       'plan',
       'deploy',
       'output',
     ], description: 'Action to perform.')
-    choice(name: 'repo_name', choices: [
-      '',
-      'cofense-platform-dev-pm',
-      'cofense-platform-dev-reporter',
-      'cofense-platform-lab',
-      'cofense-platform-lab',
-      'cofense-platform-prod-pm',
-      'cofense-platform-prod-reporter',
-    ], description: 'REPO to take action on.' )
+    string(name: 'Repo_Name', defaultValue: '', description: 'Repo for Bootstrap')
     choice(name: 'log_level', choices: ['', 'DEBUG'], description: 'Log Level. Blank to use Default.')
     }
+
+environment {
+    // build params
+    BUILD_CHANNEL="${env.BRANCH_NAME}"
+    BUILD_REVISION="${env.BUILD_NUMBER}"
+
+    // notification channels
+    SLACK_CHANNEL="#test"
+    SLACK_PREFIX="${env.JOB_NAME} <${env.BUILD_URL}|#${env.BUILD_NUMBER}>:"
+  }
+
     stages {
-        stage ('Git_Clone') {
+        stage ('Git Checkout') {
             steps {
-                script {
-          currentBuild.displayName = "${params.platform_name}-${params.stack_name} ${params.service_action}"
-        }
-                echo "git clone ${params.repo_name}"
-                echo "service_action ${params.service_action}"
-                sh label: '', script: "cd ${params.repo_name}\'"
-                sh label: '', script: 'pwd'
+                git credentialsId: '48d75450-e84e-4481-a8cb-dab1089ad5c8', url: 'https://github.com/chitransh512/Bootstrap.git'
+                sh label: '', script: 'pwd;ls -la'
                  }
              }
         }
