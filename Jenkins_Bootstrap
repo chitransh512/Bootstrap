@@ -8,7 +8,7 @@ pipeline {
       'deploy',
       'output',
     ], description: 'Action to perform.')
-    string(name: 'Repo_Name', defaultValue: '', description: 'Repo for Bootstrap')
+    string(name: 'Repo_Name', defaultValue: 'https://github.com/chitransh512/Bootstrap.git', description: 'Repo for Bootstrap')
     choice(name: 'log_level', choices: ['', 'DEBUG'], description: 'Log Level. Blank to use Default.')
     }
 
